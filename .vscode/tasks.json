@@ -1,0 +1,24 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "build:development",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": [],
+			"label": "npm: build:development",
+			"detail": "webpack --env mode=development"
+		},
+		{
+			"type": "npm",
+			"script": "build:production",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build:production",
+			"detail": "webpack --env mode=production"
+		}
+	]
+}
