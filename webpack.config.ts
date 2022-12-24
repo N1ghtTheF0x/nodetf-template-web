@@ -4,12 +4,10 @@ import NodePolyfillPlugin = require("node-polyfill-webpack-plugin")
 
 import { resolve } from "node:path"
 
-function configure(env: Record<string,any>): Configuration
+function configure(): Configuration
 {
-    const WEBPACK_MODE: Configuration["mode"] = env.mode
     const config: Configuration = {
-        entry: "./index.ts",
-        mode: WEBPACK_MODE,
+        entry: "./source/index.ts",
         devtool: "source-map",
         module: {
             rules: [
@@ -32,11 +30,31 @@ function configure(env: Record<string,any>): Configuration
                             presets: ['@babel/preset-env',"@babel/preset-typescript"]
                         }
                     }
+                },
+                {
+                    test: /\.jsx$/,
+                    exclude: /(node_modules|bower_components)/,
+                    use: {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['@babel/preset-env',"@babel/preset-react"]
+                        }
+                    }
+                },
+                {
+                    test: /\.tsx$/,
+                    exclude: /(node_modules|bower_components)/,
+                    use: {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['@babel/preset-env',"@babel/preset-typescript","@babel/preset-react"]
+                        }
+                    }
                 }
             ]
         },
         resolve: {
-            extensions: [".ts",".js"]
+            extensions: [".ts",".js",".tsx",".jsx"]
         },
         output: {
             assetModuleFilename: "[name].[contenthash][ext][query]",
